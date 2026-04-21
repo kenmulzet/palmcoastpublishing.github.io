@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Palm Coast Publishing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-overlay: rgba(0, 0, 0, 0.55);
+      --accent: #c9a15b;
+      --accent-soft: #e2c892;
+      --text-light: #f7f3e9;
+      --text-muted: #ddd2bd;
+      --nav-bg: rgba(0, 0, 0, 0.8);
+      --card-bg: rgba(0, 0, 0, 0.7);
+      --border-soft: rgba(255, 255, 255, 0.15);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-light);
+      background: #000;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Top Navigation Bar */
+    .topnav {
+        width: 59%;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 12px 20px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid #ccc;
+
+        margin: 0 auto;
+        border-radius: 8px;
+        white-space: no-wrap;  /* prevents wrapping */
+    }
+
+    .topnav a {
+        font-family: Georgia, serif;
+        color: #222;
+        text-decoration: none;
+        font-size: 1rem;
+    }
+
+    .topnav a:hover {
+        text-decoration: underline;
+    }
+
+    .content {
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 40px;
+        border-radius: 8px;
+    }
+
+    /* First line */
+    .top-line {
+      padding: 12px 20px;
+      font-size: 1.6rem;
+      font-weight: 600;
+      background: #f8f8f8;
+    }
+
+    /* Second line navigation */
+    .nav-line {
+      width: 60%;              
+      margin: 0 auto;             /* centers the entire nav bar */
+      display: flex;
+      justify-content: center;    /* centers the links inside */
+      gap: 80px;
+      padding: 10px 20px;
+      align-items: center;
+      background: #ffffff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .nav-line a,
+    .dropbtn {
+      text-decoration: none;
+      color: #333;
+      font-size: 1rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px 0;
+    }
+
+    /* Dropdown container */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Dropdown menu */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 180px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 14px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f2f2f2;
+    }
+
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      background: url("backdrop.jpg") center center / cover no-repeat;
+      z-index: -2;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay);
+      z-index: -1;
+    }
+
+    header {
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border-soft);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      white-space: nowrap;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding-bottom: 0.15rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent-soft);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    section {
+      margin: 2.5rem 0;
+      padding: 1.75rem 1.5rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+    }
+
+    section:first-of-type {
+      margin-top: 2rem;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      margin-bottom: 0.75rem;
+      color: var(--accent-soft);
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hero-title {
+      font-size: 2.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .product-card {
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      padding: 1rem 1rem 0.9rem;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .product-card h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .product-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .product-link {
+      display: inline-block;
+      margin-top: 0.35rem;
+      font-size: 0.9rem;
+      color: var(--accent-soft);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .product-link:hover {
+      border-color: var(--accent-soft);
+    }
+
+    .mathmine-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .mathmine-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-soft);
+      border: 1px solid var(--accent-soft);
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .mathmine-demo {
+      border-radius: 8px;
+      border: 1px dashed var(--border-soft);
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .mathmine-demo label {
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .mathmine-demo select,
+    .mathmine-demo button {
+      width: 100%;
+      margin-bottom: 0.6rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-soft);
+      background: rgba(10, 10, 10, 0.9);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .mathmine-demo button {
+      cursor: pointer;
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #20160a;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .mathmine-demo button:hover {
+      filter: brightness(1.05);
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .contact-list li + li {
+      margin-top: 0.35rem;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    a.inline-link {
+      color: var(--accent-soft);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    a.inline-link:hover {
+      border-color: var(--accent-soft);
+    }
+
+    @media (max-width: 800px) {
+      .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .mathmine-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+    scroll-margin-top: 120px; /* adjust as needed */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <header class="topnav">
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+
+      <div class="dropdown">
+        <button class="dropbtn">Our Products ▾</button>
+        <div class="dropdown-content">
+          <a href="#diffeq">Differential Equations</a>
+          <a href="#precalc">Precalculus</a>
+          <a href="#ti83">Using the TI-83</a>
+          <a href="#alg2">Algebra II for You</a>
+          <a href="#mathmine">Math Mine</a>
+        </div>
+      </div>
+
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class = "content">
+    <section id="home">
+      <h1 class="hero-title">Palm Coast Publishing</h1>
+      <p class="hero-subtitle">Publishing high‑quality mathematics textbooks since 2003.</p>
+      <p class="hero-meta">
+        An independent mathematics publisher with roots in the classroom and a focus on clarity, rigor, and
+        thoughtfully sequenced problem sets.
+      </p>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        Palm Coast Publishing was founded in 2003 with a simple goal: create mathematics texts that feel like a
+        conversation with a careful teacher rather than a wall of symbols. Our titles emphasize worked examples,
+        scaffolded problem sets, and a steady progression from intuition to formalism.
+      </p>
+      <p>
+        The visual identity of the site is anchored by an original photograph taken in Egypt, reflecting our
+        connection to the long history of mathematics while we continue to build modern tools for today’s learners.
+      </p>
+    </section>
+
+    <section id="products">
+      <h2>Our Products</h2>
+      <p>
+        Our catalog focuses on core undergraduate and advanced high‑school mathematics, with an emphasis on
+        courses that bridge computational skill and conceptual understanding.
+      </p>
+
+      <div class="products-grid">
+        <article class="product-card">
+          <h3>Differential Equations</h3>
+          <p class="product-meta">An introduction to ordinary differential equations with applications.</p>
+          <p>
+            From first‑order equations to linear systems, this text balances analytic techniques with modeling and
+            qualitative analysis, preparing students for engineering, physics, and applied mathematics.
+          </p>
+          <a class="product-link" href="#de">View details</a>
+        </article>
+
+        <article class="product-card">
+          <h3>Precalculus</h3>
+          <p class="product-meta">A bridge from algebra to calculus.</p>
+          <p>
+            Functions, trigonometry, analytic geometry, and introductory limits are developed with an eye toward
+            the conceptual foundations students will need in a first calculus course.
+          </p>
+          <a class="product-link" href="#precalc">View details</a>
+        </article>
+
+        <article class="product-card">
+          <h3>Using the TI‑83</h3>
+          <p class="product-meta">A practical guide to graphing calculator fluency.</p>
+          <p>
+            Step‑by‑step instructions and examples show students how to use the TI‑83 to explore functions, data,
+            and statistics without losing sight of the underlying mathematics.
+          </p>
+          <a class="product-link" href="#ti83">View details</a>
+        </article>
+
+        <article class="product-card">
+          <h3>Algebra II For You</h3>
+          <p class="product-meta">A student‑friendly approach to Algebra II.</p>
+          <p>
+            Polynomial, rational, exponential, and logarithmic functions are introduced with clear explanations,
+            frequent checks for understanding, and a wide range of practice problems.
+          </p>
+          <a class="product-link" href="#alg2">View details</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="de">
+      <h2><a href="diffeq.html">Differential Equations</a></h2>
+      <p>
+        <strong>An Introduction to Differential Equations</strong> introduces first‑order equations, linear 
+        equations of higher order, systems of differential equations, and qualitative methods. Applications 
+        are drawn from physics, engineering, and the life sciences, with an emphasis on modeling and interpretation.
+      </p>
+      <p>
+        Each chapter includes a progression from guided examples to more open‑ended problems, making the book
+        suitable for both lecture‑based and inquiry‑oriented courses.
+      </p>
+    </section>
+
+    <section id="precalc">
+      <h2><a href="precalc.html">A Student's Approach to Precalculus</a></h2>
+      <p>
+        <strong>A Student's Approach to Precalculus</strong> is designed as a true bridge to calculus, not a repetition of Algebra II. Functions
+        are treated as central objects, with attention to multiple representations, transformations, and
+        composition.
+      </p>
+      <p>
+        Trigonometry, analytic geometry, and introductory limits are developed in a way that prepares students
+        for the conceptual and notational demands of a first calculus course.
+      </p>
+    </section>
+
+    <section id="ti83">
+      <h2><a href="TI-83.html">Using the TI‑83</a></h2>
+      <p>
+        This guide helps students and instructors use the TI‑83 as a tool for exploration rather than a black box.
+        Topics include graphing functions, numerical root‑finding, regression, and basic statistics.
+      </p>
+      <p>
+        Screen captures and keystroke‑level instructions are paired with conceptual commentary so that technology
+        supports, rather than replaces, mathematical thinking.
+      </p>
+    </section>
+
+    <section id="alg2">
+      <h2><a href="alg2.html">Algebra II For You</a></h2>
+      <p>
+        Algebra II For You is written with the student’s voice in mind. Each section begins with a short, plain‑language
+        overview before moving into formal definitions and worked examples.
+      </p>
+      <p>
+        The text covers polynomial, rational, exponential, and logarithmic functions, sequences and series, and
+        introductory probability, with abundant practice at multiple levels of difficulty.
+      </p>
+    </section>
+
+    <section id="mathmine">
+      <div class="mathmine-layout">
+        <div>
+          <span class="mathmine-tag">New</span>
+          <h2>Math Mine</h2>
+          <p>
+            Math Mine is a Python‑based content engine that generates curriculum‑aligned mathematics worksheets and
+            problem sets on demand. It is designed as a modular, backend‑driven system with clear service boundaries
+            and idempotent job processing.
+          </p>
+          <p>
+            Within Palm Coast Publishing, Math Mine powers supplemental materials for our texts—allowing instructors
+            to create fresh practice sets, targeted review sheets, and variations of core problems while preserving
+            the pedagogical structure of the books.
+          </p>
+          <p>
+            At a high level, Math Mine consists of an API layer, an asynchronous worker queue, and a plug‑in
+            architecture for topic‑specific generators, making it straightforward to extend from algebra and
+            precalculus into more advanced subjects.
+          </p>
+        </div>
+        <div class="mathmine-demo">
+          <p><strong>Demo (conceptual)</strong></p>
+          <p style="margin-bottom:0.6rem;">
+            Choose a topic and generate a sample worksheet. In a live deployment, this panel would call the Math
+            Mine backend and return a PDF or HTML preview.
+          </p>
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option value="geometry">Geometry</option>
+            <option value="algebra">Algebra</option>
+            <option value="calculus">Calculus</option>
+            <option value="diffeq">Differential Equations</option>
+          </select>
+
+          <button type="button">Generate Sample Worksheet</button>
+          <p style="margin-top:0.4rem; font-size:0.8rem;">
+            (Button is illustrative only in this static HTML; wiring it to Math Mine would be done via your API.)
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const button = document.querySelector('#mathmine button');
+
+      button.addEventListener('click', async () => {
+        const topic = document.getElementById('topic').value;
+        const level = document.getElementById('level').value;
+
+        // 1. Kick off worksheet generation
+        const jobResp = await fetch('https://api.mathmine.yourdomain.com/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic, level })
+        });
+
+        const { job_id } = await jobResp.json();
+
+        // 2. Poll for job completion
+        let status = 'pending';
+        let fileUrl = null;
+
+        while (status !== 'completed') {
+          const statusResp = await fetch(`https://api.mathmine.yourdomain.com/jobs/${job_id}`);
+          const data = await statusResp.json();
+          status = data.status;
+          fileUrl = data.file_url;
+
+          if (status === 'failed') {
+            alert('Worksheet generation failed.');
+            return;
+          }
+
+          await new Promise(r => setTimeout(r, 1000));
+        }
+
+        // 3. Download the PDF
+        window.open(fileUrl, '_blank');
+      });
+    </script>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        For questions about our titles, examination copies, or supplemental materials, please use the contact
+        information below.
+      </p>
+      <ul class="contact-list">
+        <li><span class="contact-label">Email:</span> mulzet@yahoo.com</li>
+      </ul>
+      <p style="margin-top:0.75rem; font-size:0.85rem;">
+        For technical inquiries about Math Mine or integration with institutional systems, please mention “Math Mine”
+        in the subject line so your message can be routed appropriately.
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2003–2026 Palm Coast Publishing. All rights reserved.
+  </footer>
+</body>
+</html>
