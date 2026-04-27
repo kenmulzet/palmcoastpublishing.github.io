@@ -33,8 +33,8 @@
     }
 
     /* Top Navigation Bar */
-    .topnav {
-        width: 59%;
+    .topnav nav {
+        width: 60%;
         background: rgba(255, 255, 255, 0.92);
         padding: 12px 20px;
         box-sizing: border-box;
@@ -100,6 +100,14 @@
       background: none;
       border: none;
       padding: 6px 0;
+    }
+
+    .nav-link {
+      color: #CCCCCC;   /* matches the card text */
+    }
+
+    .nav-link:hover {
+      color: #ffe27a;   /* slightly lighter on hover */
     }
 
     /* Dropdown container */
@@ -498,7 +506,7 @@
       </div>
     </section>
 
-    <section id="de">
+    <section id="diffeq" class = "nav-link">
       <h2><a href="diffeq.html">Differential Equations</a></h2>
       <p>
         <strong>An Introduction to Differential Equations</strong> introduces first‑order equations, linear 
@@ -512,7 +520,7 @@
     </section>
 
     <section id="precalc">
-      <h2><a href="precalc.html">A Student's Approach to Precalculus</a></h2>
+      <h2><a href="precalc.html" class = "nav-link">A Student's Approach to Precalculus</a></h2>
       <p>
         <strong>A Student's Approach to Precalculus</strong> is designed as a true bridge to calculus, not a repetition of Algebra II. Functions
         are treated as central objects, with attention to multiple representations, transformations, and
@@ -525,7 +533,7 @@
     </section>
 
     <section id="ti83">
-      <h2><a href="TI-83.html">Using the TI‑83</a></h2>
+      <h2><a href="TI-83.html" class = "nav-link">Using the TI‑83</a></h2>
       <p>
         This guide helps students and instructors use the TI‑83 as a tool for exploration rather than a black box.
         Topics include graphing functions, numerical root‑finding, regression, and basic statistics.
@@ -537,7 +545,7 @@
     </section>
 
     <section id="alg2">
-      <h2><a href="alg2.html">Algebra II For You</a></h2>
+      <h2><a href="alg2.html" class = "nav-link">Algebra II For You</a></h2>
       <p>
         Algebra II For You is written with the student’s voice in mind. Each section begins with a short, plain‑language
         overview before moving into formal definitions and worked examples.
@@ -584,6 +592,9 @@
           </select>
 
           <button type="button">Generate Sample Worksheet</button>
+          <p style="margin-top:0.4rem; font-size:0.8rem;">
+            (Button is illustrative only in this static HTML; wiring it to Math Mine would be done via your API.)
+          </p>
         </div>
       </div>
     </section>
